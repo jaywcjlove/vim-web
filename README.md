@@ -138,7 +138,7 @@ $ yum install ctags
 <details>
 <summary>5. 界面字体设置</summary>
 
-`vim-powerline`状态栏主题，界面箭头需要安装[Powerline字体](https://github.com/powerline/fonts) （在我Mac上安装的是Sauce Code Powerline字体），下载安装完成之后，还需要你在命令行工具中设置该字体。
+`vim-powerline`状态栏主题，界面箭头需要安装[Powerline字体](https://github.com/powerline/fonts) （在我Mac上安装的是Source Code Pro for Powerline字体），下载安装完成之后，还需要你在命令行工具中设置该字体。
 
 在iTerm2中设置方法：`Command+,` 进入偏好设置（Preferences）=> Profiles => Default(自己的主题配置) => Non-ASCII Font => Change Font(选择字体)
 
