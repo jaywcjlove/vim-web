@@ -1,3 +1,12 @@
+/**
+ * Markdown Style
+ * @version 1.1.0
+ * @author 小弟调调
+ * https://github.com/jaywcjlove/markdown-style
+ * 
+ * Integrate markdown styles into web components, Markdown CSS styles will not be conflicted.
+ * The minimal amount of CSS to replicate the GitHub Markdown style. Support dark-mode/night mode.
+ */
 const octiconLinkStyle = `
 markdown-style h1:hover a.anchor .icon-link:before,
 markdown-style h2:hover a.anchor .icon-link:before,
@@ -540,14 +549,14 @@ markdown-style .absent {
   color: var(--color-danger-fg);
 }
 
-markdown-style .anchor {
+markdown-style a.anchor {
   float: left;
   padding-right: 4px;
   margin-left: -20px;
   line-height: 1;
 }
 
-markdown-style .anchor:focus {
+markdown-style a.anchor:focus {
   outline: none;
 }
 
@@ -577,6 +586,35 @@ markdown-style sup>a::before {
 
 markdown-style sup>a::after {
   content: "]";
+}
+
+.markdown-body .octicon-video {
+  border: 1px solid #d0d7de !important;
+  border-radius: 6px !important;
+  display: block;
+}
+
+markdown-style .octicon-video summary {
+    border-bottom: 1px solid #d0d7de !important;
+    padding: 8px 16px !important;
+    cursor: pointer;
+}
+
+markdown-style .octicon-video > video {
+    display: block !important;
+    max-width: 100% !important;
+    padding: 2px;
+    box-sizing: border-box;
+    border-bottom-right-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+}
+
+markdown-style details.octicon-video:not([open])>*:not(summary) {
+    display: none !important;
+}
+
+markdown-style details.octicon-video:not([open]) > summary {
+    border-bottom: 0 !important;
 }
 
 markdown-style h1 .octicon-link,
@@ -700,6 +738,7 @@ markdown-style table tr:nth-child(2n) {
 
 markdown-style table img {
   background-color: transparent;
+  vertical-align: middle;
 }
 
 markdown-style img[align=right] {
@@ -961,6 +1000,13 @@ markdown-style ::-webkit-calendar-picker-indicator {
 <slot></slot>
 `;
 class MarkdownStyle extends HTMLElement {
+    get theme() {
+        const value = this.getAttribute('theme');
+        return value === null ? '' : value;
+    }
+    set theme(name) {
+        this.setAttribute('theme', name);
+    }
     constructor() {
         super();
         this.shadow = this.attachShadow({ mode: 'open' });
@@ -977,14 +1023,11 @@ class MarkdownStyle extends HTMLElement {
             }
         }
     }
-    get theme() {
-        const value = this.getAttribute('theme');
-        return value === null ? '' : value;
-    }
-    set theme(name) {
-        this.setAttribute('theme', name);
-    }
     connectedCallback() {
+        const disableThemeAutoSwitch = this.getAttribute('theme-auto-switch-disabled');
+        if (disableThemeAutoSwitch == "" || disableThemeAutoSwitch && disableThemeAutoSwitch.toLowerCase() === 'true') {
+            return;
+        }
         if (!this.theme) {
             const { colorMode } = document.documentElement.dataset;
             this.theme = colorMode;
@@ -1002,4 +1045,3 @@ class MarkdownStyle extends HTMLElement {
     }
 }
 customElements.define('markdown-style', MarkdownStyle);
-//# sourceMappingURL=index.js.map
